@@ -1,4 +1,5 @@
 const APIUtil = require('./api_util.js');
+const FollowToggle = require('./follow_toggle.js');
 
 class UsersSearch {
   
@@ -22,8 +23,12 @@ class UsersSearch {
       (key) => {
         let username = userHash[key].username;
         let userId = userHash[key].id;
-        // this.ul.append(`<li><a href="http://localhost:3000/users/${userId}">${username}</a></li>`);
-        // this.ul.append(`<li><a href="${user_url(userId)}">${username}</a></li>`);
+        let followState = userHash[key].followed;
+        this.ul.append(`<li><a href="/users/${userId}">${username}</a></li>`);
+        const $b = $(`<button class="follow-toggle" type="button" name="button"></button>`);
+        this.ul.append($b);
+        
+        new FollowToggle($b, {followState: followState, followeeId: userId});
       }
     );
   }
